@@ -56,6 +56,7 @@ export async function saveEquipmentAction(_: ActionState, form: FormData): Promi
 }
 export async function deleteInventoryAction(_: ActionState, form: FormData): Promise<ActionState> {
   try {
+    if (form.get('confirm') !== 'yes') fail('Confirm the deletion impact before continuing.');
     const actor = await actionUser(true); const kind = String(form.get('kind')); if (!['libraries', 'equipment'].includes(kind)) fail('Invalid inventory type.'); const id = validId(String(form.get('id')));
     await store.transaction(async tx => {
       const item = await tx.get<Library | Equipment>(`${kind}/${id}`); if (!item) fail('Inventory not found.');
