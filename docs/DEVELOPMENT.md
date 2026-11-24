@@ -19,3 +19,14 @@ The local Git history records project setup, domain transactions, Firebase/sessi
 - Check both roles, capture actual screenshots and record any fixes.
 - Write the approximately 1,500-word technical report, including code extracts and a 250–500-word final evaluation.
 - Provide usable marker access and review the final archive and GitHub history before submission.
+
+## Final verification update
+
+- All eight composite indexes are enabled.
+- Worker login, booking two units, moving dates/quantities, cancellation and logout passed in Chrome.
+- Admin login, all-reservation view, library/equipment creation, name/capacity editing and test-library archive passed.
+- Live map shows restored daily quantities and marker popups.
+- Fixed versioned edit-form reset and hidden mobile sign-out.
+- After fixes: TypeScript, twelve domain tests and production build passed.
+- Ten checks in scripts/verify-firebase.ts passed against actual Firestore, including contention and unauthenticated denial.
+- Local execution chosen by the owner; secure marker access must be agreed.

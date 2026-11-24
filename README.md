@@ -4,7 +4,7 @@ Next.js App Router, React Server Components and Server Actions, Firebase Authent
 
 ## Current status
 
-Source implementation is present for requirements A–I. Firebase project **greenshare-ae2** has been created on the free Spark plan, Email/Password Authentication is enabled and Cloud Firestore is provisioned in **europe-west2 (London)** with production-mode rules. The application is **not yet connected** to server credentials. The `/preview` route uses clearly labelled illustrative inventory and cannot make reservations. A live Firebase project, test accounts and end-to-end verification are required before submission. No AE2 technical report is represented as complete.
+Source implementation is present for requirements A–I. Firebase project **greenshare-ae2** is connected locally, with Email/Password Authentication, production-mode Firestore rules and eight enabled composite indexes in **europe-west2**. Both assessment roles were verified. Twelve domain tests and ten real Firestore integration checks passed; representative browser journeys passed. Extended acceptance cases remain documented in `docs/ACCEPTANCE.md`. GitHub hosts source, not a running application. The chosen delivery mode is local execution.
 
 ## Requirements and run
 
@@ -27,7 +27,7 @@ Source implementation is present for requirements A–I. Firebase project **gree
 
 ## Marker access and assessment credentials
 
-**Not configured yet.** No live accounts or passwords are claimed to exist. Before submitting, replace this paragraph with the actual test-app URL (if hosted), username **worker** and its dedicated test password, username **admin** and its dedicated test password. Keep these assessment-only credentials in the marker’s submitted README. A public repository should contain setup instructions; private service-account credentials must never be published.
+Assessment accounts **worker** and **admin** exist. Their dedicated passwords are supplied only in the submitted ZIP's `MARKER_ACCESS.txt`, not this public repository. Local owner configuration is in `.env.local`, which is excluded from Git and packaging. Marker access still requires a securely configured server environment: either the owner demonstrates this configured local machine, or the marker creates a dedicated Firebase project and runs the seed script with their own test passwords. Agree the marking access arrangement before submission.
 
 The web API configuration identifies the Firebase project; it is not a service-account secret. The private Admin SDK key belongs only in the local/server environment. The marker can either access a running hosted app or configure their own dedicated Firebase project using these steps. A source ZIP with no usable test access is **not submission-ready**.
 
@@ -80,3 +80,9 @@ This source was generated and developed with OpenAI ChatGPT/Codex assistance on 
 - https://firebase.google.com/docs/auth/admin/manage-cookies
 - https://firebase.google.com/docs/reference/rest/auth
 - https://leafletjs.com/reference-1.9.4.html
+
+## Verified local launch
+
+On the configured owner Mac, double-click `Start_GreenShare.command` and keep Terminal open. Visit http://127.0.0.1:3000. Press Control+C in Terminal to stop. A normal Node installation uses `npm ci` followed by `npm run dev`; the launcher includes a fallback for this Mac’s bundled Node/WASM environment.
+
+Run real database verification explicitly with `node --env-file=.env.local --experimental-strip-types scripts/verify-firebase.ts`. This creates dedicated verification inventory, then archives it and preserves cancelled history. It does not erase existing data.
