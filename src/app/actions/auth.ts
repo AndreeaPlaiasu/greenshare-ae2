@@ -5,7 +5,6 @@ import { auth, db, isConfigured } from '@/lib/firebase';
 import { checkOrigin } from '@/lib/session';
 import { DomainError } from '@/lib/domain';
 export type ActionState = { ok: boolean; message: string; id?: string; pending?: boolean };
-export const initialState: ActionState = { ok: false, message: '' };
 export async function loginAction(_: ActionState, form: FormData): Promise<ActionState> {
   try {
     await checkOrigin();
