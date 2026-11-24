@@ -10,3 +10,5 @@ dist/
 coverage/
 service-account*.json
 *-firebase-adminsdk-*.json
+
+*.bundle

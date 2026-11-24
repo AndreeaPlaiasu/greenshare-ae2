@@ -1,4 +1,4 @@
-import { DATES, type Library, type Equipment } from './domain';
+import { DATES, type Library, type Equipment } from './domain.ts';
 import type { CatalogueItem } from './data';
 // Illustrative inventory only. These are not claims about real lending services.
 export const sampleLibraries: Library[] = [

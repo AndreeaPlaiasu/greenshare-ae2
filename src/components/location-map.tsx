@@ -4,7 +4,7 @@ import type { Equipment, Library, Stock } from '@/lib/domain';
 import { formatDate } from '@/lib/domain';
 import 'leaflet/dist/leaflet.css';
 export type MapLocation = Library & { equipment: Array<Equipment & { stock: Stock[] }> };
-export function LocationMap({ locations, admin }: { locations: MapLocation[]; admin: boolean }) {
+export function LocationMap({ locations, admin, preview = false }: { locations: MapLocation[]; admin: boolean; preview?: boolean }) {
   const container = useRef<HTMLDivElement>(null); const [failed, setFailed] = useState(false);
   useEffect(() => {
     let disposed = false; let map: import('leaflet').Map | undefined;
@@ -23,7 +23,7 @@ export function LocationMap({ locations, admin }: { locations: MapLocation[]; ad
           for (const equipment of library.equipment) {
             const section = document.createElement('section'); const heading = document.createElement('strong'); heading.textContent = equipment.name; section.append(heading);
             for (const s of equipment.stock) { const line = document.createElement('div'); line.textContent = `${formatDate(s.date)}: ${s.capacity - s.reserved} available`; section.append(line); }
-            const link = document.createElement('a'); link.href = admin ? '/admin' : `/equipment/${encodeURIComponent(equipment.id)}`; link.textContent = admin ? 'Manage equipment' : 'Borrow this equipment'; section.append(link); content.append(section);
+            const link = document.createElement('a'); link.href = preview ? '/setup' : admin ? '/admin' : `/equipment/${encodeURIComponent(equipment.id)}`; link.textContent = preview ? 'Set up borrowing' : admin ? 'Manage equipment' : 'Borrow this equipment'; section.append(link); content.append(section);
           }
           L.marker([library.latitude, library.longitude], { icon, title: library.name, alt: library.name }).addTo(map).bindPopup(content, { maxWidth: 340, maxHeight: 360 });
         }
@@ -31,6 +31,6 @@ export function LocationMap({ locations, admin }: { locations: MapLocation[]; ad
       } catch { if (!disposed) setFailed(true); }
     })();
     return () => { disposed = true; map?.remove(); };
-  }, [locations, admin]);
+  }, [locations, admin, preview]);
   return <section aria-label="Interactive library map"><div ref={container} className="location-map"/>{failed && <p className="notice" role="status">Some map tiles could not load. All locations and borrowing links are available in the list below.</p>}</section>;
 }

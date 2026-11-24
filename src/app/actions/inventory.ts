@@ -68,10 +68,10 @@ export async function deleteInventoryAction(_: ActionState, form: FormData): Pro
     const remaining = await db().collection('reservations').where(field, '==', id).where('status', '==', 'active').limit(1).get();
     if (!remaining.empty) { refresh(); return { ok: true, pending: true, message: 'Deletion is in progress. Select Resume deletion to continue cancelling reservations.' }; }
     if (kind === 'libraries') {
-      const children = await db().collection('equipment').where('libraryId', '==', id).get();
-      const unfinished = children.docs.filter(d => d.data().status !== 'archived');
-      const batch = db().batch(); unfinished.slice(0, 100).forEach(d => batch.update(d.ref, { status: 'archived' })); await batch.commit();
-      if (unfinished.length > 100) { refresh(); return { ok: true, pending: true, message: 'Reservations are cancelled. Resume deletion to finish archiving the inventory.' }; }
+      const children = await db().collection('equipment').where('libraryId', '==', id).where('status', 'in', ['active', 'deleting']).limit(100).get();
+      const batch = db().batch(); children.docs.forEach(d => batch.update(d.ref, { status: 'archived' })); if (!children.empty) await batch.commit();
+      const unfinished = await db().collection('equipment').where('libraryId', '==', id).where('status', 'in', ['active', 'deleting']).limit(1).get();
+      if (!unfinished.empty) { refresh(); return { ok: true, pending: true, message: 'Reservations are cancelled. Resume deletion to finish archiving the inventory.' }; }
     }
     await db().doc(`${kind}/${id}`).update({ status: 'archived' });
     refresh(); return { ok: true, message: 'Inventory removed. Affected reservations are cancelled; history is retained.' };
