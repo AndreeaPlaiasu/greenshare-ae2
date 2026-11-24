@@ -1,2 +1,23 @@
 'use client';
-export default function ErrorPage({ reset }: { error: Error & { digest?: string }; reset: () => void }) { return <main id="main" className="setup-page"><div className="setup-card"><span className="eyebrow">LET’S TRY THAT AGAIN</span><h1>We couldn’t load this page.</h1><p>Your existing reservations are unchanged. If this continues, check the Firebase connection and required indexes.</p><button className="button button-dark" onClick={reset}>Try again</button></div></main>; }
+export default function ErrorPage({
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    <main id="main" className="setup-page">
+      <div className="setup-card">
+        <span className="eyebrow">LET’S TRY THAT AGAIN</span>
+        <h1>We couldn’t load this page.</h1>
+        <p>
+          Your existing reservations are unchanged. If this continues, check the
+          Firebase connection and required indexes.
+        </p>
+        <button className="button button-dark" onClick={reset}>
+          Try again
+        </button>
+      </div>
+    </main>
+  );
+}

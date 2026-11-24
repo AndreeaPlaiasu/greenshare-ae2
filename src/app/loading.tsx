@@ -1,1 +1,9 @@
-export default function Loading() { return <main id="main" className="loading-state" role="status"><span className="loading-leaf">↟</span><h1>Gathering the useful things…</h1><p>Loading your community library.</p></main>; }
+export default function Loading() {
+  return (
+    <main id="main" className="loading-state" role="status">
+      <span className="loading-leaf">↟</span>
+      <h1>Gathering the useful things…</h1>
+      <p>Loading your community library.</p>
+    </main>
+  );
+}
