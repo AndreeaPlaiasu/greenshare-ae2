@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { useActionState, useRef, useState } from 'react';
 import { DATES, formatDate, type Reservation, type Stock } from '@/lib/domain';
 import { reserveAction, editReservationAction, cancelReservationAction } from '@/app/actions/reservations';
-const initial = { ok: false, message: '' };
+import type { ActionState } from '@/app/actions/auth';
+const initial: ActionState = { ok: false, message: '' };
 export function ReservationForm({ equipmentId, stock, selectedDate, token, reservation }: { equipmentId: string; stock: Stock[]; selectedDate: string; token: string; reservation?: Reservation }) {
   const [selected, setSelected] = useState(selectedDate);
   const [state, action, pending] = useActionState(reservation ? editReservationAction : reserveAction, initial);
